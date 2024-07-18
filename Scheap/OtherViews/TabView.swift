@@ -8,43 +8,52 @@
 import SwiftUI
 
 struct TabView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
+    @Binding var activePage: ActivePageItem
+
     var body: some View {
-        
         HStack {
-            VStack {
-                Image(systemName: "house")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 70, maxHeight: 50)
-            }
-            .padding()
+            TabViewItem(symbol: "house")
+                .onTapGesture {
+                    activePage = .home
+                }
             
-            VStack {
-                Image(systemName: "list.bullet.rectangle.portrait")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 70, maxHeight: 50)
-            }
-            .padding()
+            TabViewItem(symbol: "list.bullet.rectangle.portrait")
+                .onTapGesture {
+                    activePage = .shoppingList
+                }
             
-            VStack {
-                Image(systemName: "map")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 70, maxHeight: 50)
-            }
-            .padding()
-            
+            TabViewItem(symbol: "map")
+                .onTapGesture {
+                    activePage = .map
+                }
         }
         .frame(width: 320, height: 80)
         .background(Color.primaryBackground)
         .clipShape(RoundedRectangle(cornerRadius: 24))
-        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+        .shadow(radius: 10)
     }
 }
 
+struct TabViewItem: View {
+    let symbol: String
+    
+    var body: some View {
+        VStack {
+            Image(systemName: symbol)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 70, maxHeight: 50)
+        }
+        .padding()
+    }
+}
+
+enum ActivePageItem {
+    case home
+    case shoppingList
+    case map
+}
+
 #Preview {
-    TabView()
+    TabView(activePage: .constant(.home))
 }

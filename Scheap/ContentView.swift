@@ -9,15 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @State var activePage: ActivePageItem = .home
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            TabView()
+        ZStack {
+            switch activePage {
+            case .home:
+                HomepageView()
+            case .shoppingList:
+                ShoppingListView()
+            case .map:
+                StoreMapView()
+            }
+            VStack {
+                Spacer()
+                TabView(activePage: $activePage)
+            }
         }
     }
 }
+
 
 #Preview {
     ContentView()
