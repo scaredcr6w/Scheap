@@ -12,17 +12,17 @@ struct TabView: View {
 
     var body: some View {
         HStack {
-            TabViewItem(symbol: "house")
+            TabViewItem(symbol: "house", label: "Főoldal")
                 .onTapGesture {
                     activePage = .home
                 }
             
-            TabViewItem(symbol: "list.bullet.rectangle.portrait")
+            TabViewItem(symbol: "list.bullet.rectangle.portrait", label: "Listám")
                 .onTapGesture {
                     activePage = .shoppingList
                 }
             
-            TabViewItem(symbol: "map")
+            TabViewItem(symbol: "map", label: "Térkép")
                 .onTapGesture {
                     activePage = .map
                 }
@@ -36,14 +36,17 @@ struct TabView: View {
 
 struct TabViewItem: View {
     let symbol: String
+    let label: String
     
     var body: some View {
         VStack {
             Image(systemName: symbol)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 70, maxHeight: 50)
+            Text(label)
+                .font(.system(size: 12))
         }
+        .frame(maxWidth: 70, maxHeight: 50)
         .padding()
     }
 }
