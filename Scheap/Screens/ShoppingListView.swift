@@ -6,13 +6,56 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ShoppingListView: View {
+    @Environment(\.modelContext) private var context
+    @Query private var shoppingList: [Product]
+    @State private var isShowingCreateSheet: Bool = false
+    @State private var isShowingInfoSheet: Bool = false
+    @State var input: String = ""
+    
     var body: some View {
-        Text("Shopping")
+        VStack (alignment: .leading) {
+            HStack {
+                Text("Bevásárlólista")
+                    .bold()
+                    .font(.system(size: 36))
+                    .padding()
+                
+                Image(systemName: "info.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 28)
+                    .foregroundStyle(Color.gray)
+                    .padding(.trailing, 40)
+                    .onTapGesture {
+                        isShowingInfoSheet.toggle()
+                    }
+                
+                if !input.isEmpty {
+                    Button {
+                        //tovabb a splitre
+                    } label: {
+                        Image(systemName: "arrow.right.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 28)
+                    }
+                }
+            }
+            
+            if shoppingList.isEmpty {
+                TextEditor(text: $input)
+                    .font(.system(size: 28))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding()
+            }
+        }
     }
 }
 
 #Preview {
     ShoppingListView()
+        .modelContainer(for: Product.self, inMemory: true)
 }
