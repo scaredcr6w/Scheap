@@ -12,17 +12,26 @@ struct TabView: View {
 
     var body: some View {
         HStack {
-            TabViewItem(symbol: "house", label: "Főoldal")
+            TabViewItem(symbol: activePage == .home ?
+                        "house.fill" :
+                            "house",
+                        label: "Főoldal")
                 .onTapGesture {
                     activePage = .home
                 }
             
-            TabViewItem(symbol: "list.bullet.rectangle.portrait", label: "Listám")
+            TabViewItem(
+                symbol: activePage == .shoppingList ?
+                "list.bullet.rectangle.portrait.fill" :         "list.bullet.rectangle.portrait",
+                        label: "Listám")
                 .onTapGesture {
                     activePage = .shoppingList
                 }
             
-            TabViewItem(symbol: "map", label: "Térkép")
+            TabViewItem(symbol: activePage == .map ?
+                        "map.fill" :
+                            "map",
+                        label: "Térkép")
                 .onTapGesture {
                     activePage = .map
                 }
