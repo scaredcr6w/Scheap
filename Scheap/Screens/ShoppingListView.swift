@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ShoppingListView: View {
-    @Environment(\.modelContext) private var context
-    @Query private var shoppingList: [Product]
     @State private var isShowingCreateSheet: Bool = false
     @State private var isShowingInfoSheet: Bool = false
     @State var input: String = ""
@@ -45,12 +42,11 @@ struct ShoppingListView: View {
                 }
             }
             
-            if shoppingList.isEmpty {
-                TextEditor(text: $input)
-                    .font(.system(size: 28))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding()
-            }
+            TextEditor(text: $input)
+                .font(.system(size: 28))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
+            
         }
     }
 }
