@@ -67,6 +67,14 @@ struct ShoppingListView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
+                .alert("Hiba!",
+                       isPresented: $didError,
+                       actions: {
+                    Button("OK", role: .cancel) { }
+                },
+                       message: {
+                    Text(errorMessage)
+                })
             }
             
         }

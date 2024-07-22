@@ -23,6 +23,8 @@ enum ShoppingListValidationError : Error, LocalizedError {
 
 final class ShoppingListViewModel : ObservableObject {
     @Published var userList: String = ""
+    private var shoppingItems: [String] = []
+    
     
     private func validateUserInput(
         from userInput: String,
