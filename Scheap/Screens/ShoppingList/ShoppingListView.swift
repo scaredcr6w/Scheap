@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShoppingListView: View {
-    @ObservedObject private var viewModel = ShoppingListViewModel()
+    @StateObject private var viewModel = ShoppingListViewModel()
     @State private var isShowingKeyboard: Bool = false
     @State private var isShowingInfoSheet: Bool = false
     @FocusState private var focusTextEditor: Bool
@@ -44,14 +44,14 @@ struct ShoppingListView: View {
                 }
             }
             
-            TextEditor(text: $userInputString)
+            TextEditor(text: $viewModel.userList)
                 .focused($focusTextEditor)
                 .font(.system(size: 28))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
             
             
-            if !isShowingKeyboard && !userInputString.isEmpty {
+            if !isShowingKeyboard && !viewModel.userList.isEmpty {
                 Button {
                     viewModel.handleUserInput() { error in
                         if let error {
@@ -79,7 +79,6 @@ struct ShoppingListView: View {
             }
             
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                viewModel.setUserList(userInput: userInputString)
                 self.isShowingKeyboard = false
             }
         }
@@ -92,5 +91,4 @@ struct ShoppingListView: View {
 
 #Preview {
     ShoppingListView()
-        .modelContainer(for: Product.self, inMemory: true)
 }
