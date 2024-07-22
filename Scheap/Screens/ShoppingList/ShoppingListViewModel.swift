@@ -50,7 +50,7 @@ final class ShoppingListViewModel : ObservableObject {
         validateUserInput(from: userListInput) { result in
             switch result {
             case .success(let validString):
-                self.userListInput = validString
+                self.shoppingItems = self.userInputToArray(input: validString)
                 completion(nil)
             case .failure(let error):
                 completion(error)
@@ -58,7 +58,7 @@ final class ShoppingListViewModel : ObservableObject {
         }
     }
     
-    func userInputToArray() -> [String] {
-        return userListInput.split(separator: "\n").map(String.init)
+    func userInputToArray(input: String) -> [String] {
+        return input.split(separator: "\n").map(String.init)
     }
 }

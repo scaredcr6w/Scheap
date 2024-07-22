@@ -12,16 +12,16 @@ struct ContentView: View {
     @State private var keyboardActive: Bool = false
     
     var body: some View {
-        VStack {
-            switch activePage {
-            case .home:
-                HomepageView()
-            case .shoppingList:
-                ShoppingListView()
-            case .map:
-                StoreMapView()
-            }
-            Spacer()
+        ZStack {
+            HomepageView()
+                .opacity(activePage == .home ? 1 : 0)
+                .disabled(activePage == .home ? false : true)
+            ShoppingListView()
+                .opacity(activePage == .shoppingList ? 1 : 0)
+                .disabled(activePage == .shoppingList ? false : true)
+            StoreMapView()
+                .opacity(activePage == .map ? 1 : 0)
+                .disabled(activePage == .map ? false : true)
         }
         
         VStack {
