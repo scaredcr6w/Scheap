@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var keyboardActive: Bool = false
     
     var body: some View {
-        ZStack {
+        VStack {
             switch activePage {
             case .home:
                 HomepageView()
@@ -21,26 +21,26 @@ struct ContentView: View {
             case .map:
                 StoreMapView()
             }
-            VStack {
-                Spacer()
-                
-                if !keyboardActive {
-                    TabView(activePage: $activePage)
-                }
+            Spacer()
+        }
+        
+        VStack {
+            if !keyboardActive {
+                TabView(activePage: $activePage)
             }
-            .onAppear {
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-                    self.keyboardActive = true
-                }
-                
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                    self.keyboardActive = false
-                }
+        }
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                self.keyboardActive = true
             }
-            .onDisappear {
-                NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-                NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                self.keyboardActive = false
             }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         }
     }
 }
