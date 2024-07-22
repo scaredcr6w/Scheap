@@ -36,6 +36,7 @@ struct ShoppingListView: View {
                         focusTextEditor = false
                     }
                     .font(.title2)
+                    .fontWeight(.semibold)
                 }
             }
             
@@ -59,6 +60,9 @@ struct ShoppingListView: View {
                 .padding()
             }
             
+        }
+        .sheet(isPresented: $isShowingInfoSheet) {
+            ShoppingListInfoSheet()
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
