@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct ShoppingListView: View {
+    @ObservedObject private var viewModel = ShoppingListViewModel()
     @State private var isShowingKeyboard: Bool = false
     @State private var isShowingInfoSheet: Bool = false
     @FocusState private var focusTextEditor: Bool
-    @State var input: String = ""
+    
+    @State var userInputString: String = ""
+    @State private var didError: Bool = false
+    @State private var errorMessage: String = ""
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -40,16 +44,21 @@ struct ShoppingListView: View {
                 }
             }
             
-            TextEditor(text: $input)
+            TextEditor(text: $userInputString)
                 .focused($focusTextEditor)
                 .font(.system(size: 28))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
             
             
-            if !input.isEmpty {
+            if !isShowingKeyboard && !userInputString.isEmpty {
                 Button {
-                    //tovabb a splitre
+                    viewModel.handleUserInput() { error in
+                        if let error {
+                            self.errorMessage = error.localizedDescription
+                            self.didError = true
+                        }
+                    }
                 } label: {
                     Image(systemName: "arrow.right.circle")
                         .resizable()
@@ -70,6 +79,7 @@ struct ShoppingListView: View {
             }
             
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                viewModel.setUserList(userInput: userInputString)
                 self.isShowingKeyboard = false
             }
         }
