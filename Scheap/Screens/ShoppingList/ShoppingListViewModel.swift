@@ -22,7 +22,7 @@ enum ShoppingListValidationError : Error, LocalizedError {
 }
 
 final class ShoppingListViewModel : ObservableObject {
-    @Published var userList: String = ""
+    @Published var userListInput: String = ""
     private var shoppingItems: [String] = []
     
     
@@ -38,7 +38,7 @@ final class ShoppingListViewModel : ObservableObject {
             return
         }
         
-        guard userList.rangeOfCharacter(from: validCharacters) != nil else {
+        guard userListInput.rangeOfCharacter(from: validCharacters) != nil else {
             completionHandler(.failure(.specialCharacters))
             return
         }
@@ -47,14 +47,18 @@ final class ShoppingListViewModel : ObservableObject {
     }
     
     func handleUserInput(completion: @escaping (Error?) -> Void) {
-        validateUserInput(from: userList) { result in
+        validateUserInput(from: userListInput) { result in
             switch result {
             case .success(let validString):
-                self.userList = validString
+                self.userListInput = validString
                 completion(nil)
             case .failure(let error):
                 completion(error)
             }
         }
+    }
+    
+    func userInputToArray() -> [String] {
+        return userListInput.split(separator: "\n").map(String.init)
     }
 }

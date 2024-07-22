@@ -44,14 +44,14 @@ struct ShoppingListView: View {
                 }
             }
             
-            TextEditor(text: $viewModel.userList)
+            TextEditor(text: $viewModel.userListInput)
                 .focused($focusTextEditor)
                 .font(.system(size: 28))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
             
             
-            if !isShowingKeyboard && !viewModel.userList.isEmpty {
+            if !isShowingKeyboard && !viewModel.userListInput.isEmpty {
                 Button {
                     viewModel.handleUserInput() { error in
                         if let error {
