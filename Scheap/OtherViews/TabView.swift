@@ -22,7 +22,8 @@ struct TabView: View {
             
             TabViewItem(
                 symbol: activePage == .shoppingList ?
-                "list.bullet.rectangle.portrait.fill" :         "list.bullet.rectangle.portrait",
+                "list.bullet.rectangle.portrait.fill" :
+                    "list.bullet.rectangle.portrait",
                         label: "Listám")
                 .onTapGesture {
                     activePage = .shoppingList
