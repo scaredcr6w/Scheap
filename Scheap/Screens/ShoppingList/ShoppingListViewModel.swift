@@ -23,7 +23,7 @@ enum ShoppingListValidationError : Error, LocalizedError {
 
 final class ShoppingListViewModel : ObservableObject {
     @Published var userListInput: String = ""
-    private var shoppingItems: [String] = []
+    var shoppingItems: [String] = []
     
     
     private func validateUserInput(
@@ -50,7 +50,7 @@ final class ShoppingListViewModel : ObservableObject {
         validateUserInput(from: userListInput) { result in
             switch result {
             case .success(let validString):
-                self.shoppingItems = self.userInputToArray(input: validString)
+                self.shoppingItems = self.stringToArray(input: validString)
                 completion(nil)
             case .failure(let error):
                 completion(error)
@@ -58,7 +58,7 @@ final class ShoppingListViewModel : ObservableObject {
         }
     }
     
-    func userInputToArray(input: String) -> [String] {
+    private func stringToArray(input: String) -> [String] {
         return input.split(separator: "\n").map(String.init)
     }
 }
