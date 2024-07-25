@@ -21,6 +21,7 @@
 		0FC93F052C48F25D005438F6 /* ScheapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93F042C48F25D005438F6 /* ScheapUITests.swift */; };
 		0FC93F072C48F25D005438F6 /* ScheapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93F062C48F25D005438F6 /* ScheapUITestsLaunchTests.swift */; };
 		0FC93F142C4904B5005438F6 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93F132C4904B5005438F6 /* TabView.swift */; };
+		0FCCF1FC2C525D44000D391E /* StoreMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF1FB2C525D44000D391E /* StoreMapViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		0FC93F042C48F25D005438F6 /* ScheapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheapUITests.swift; sourceTree = "<group>"; };
 		0FC93F062C48F25D005438F6 /* ScheapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0FC93F132C4904B5005438F6 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		0FCCF1FB2C525D44000D391E /* StoreMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapViewModel.swift; sourceTree = "<group>"; };
+		0FCCF1FD2C526C4B000D391E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 				0FEEB6642C4E41AE0080C95E /* Homepage */,
 				0FEEB6662C4E432A0080C95E /* ShoppingList */,
 				0FEEB6652C4E431B0080C95E /* StoreMap */,
+				0FCCF1F82C525BAA000D391E /* Buttons */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -140,6 +144,7 @@
 				0FC93EE72C48F25C005438F6 /* ScheapApp.swift */,
 				0FC93EE92C48F25C005438F6 /* ContentView.swift */,
 				0FC93EED2C48F25D005438F6 /* Assets.xcassets */,
+				0FCCF1FD2C526C4B000D391E /* Info.plist */,
 				0FC93EEF2C48F25D005438F6 /* Preview Content */,
 			);
 			path = Scheap;
@@ -170,6 +175,13 @@
 			path = ScheapUITests;
 			sourceTree = "<group>";
 		};
+		0FCCF1F82C525BAA000D391E /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		0FEEB6642C4E41AE0080C95E /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				0F03E63A2C493E70009E4D6F /* StoreMapView.swift */,
+				0FCCF1FB2C525D44000D391E /* StoreMapViewModel.swift */,
 			);
 			path = StoreMap;
 			sourceTree = "<group>";
@@ -277,11 +290,12 @@
 			};
 			buildConfigurationList = 0FC93EDF2C48F25C005438F6 /* Build configuration list for PBXProject "Scheap" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = hu;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				hu,
 			);
 			mainGroup = 0FC93EDB2C48F25C005438F6;
 			productRefGroup = 0FC93EE52C48F25C005438F6 /* Products */;
@@ -329,6 +343,7 @@
 				0FABC6852C4A9DDD00888A1E /* ShoppingListView.swift in Sources */,
 				0FC93EEA2C48F25C005438F6 /* ContentView.swift in Sources */,
 				0FC93EEC2C48F25C005438F6 /* Product.swift in Sources */,
+				0FCCF1FC2C525D44000D391E /* StoreMapViewModel.swift in Sources */,
 				0F03E6372C493E00009E4D6F /* HomepageView.swift in Sources */,
 				0FBFE2E52C4E65B4000062BB /* ShoppingListViewModel.swift in Sources */,
 				0FC93F142C4904B5005438F6 /* TabView.swift in Sources */,
@@ -501,6 +516,8 @@
 				DEVELOPMENT_TEAM = 37925SQG82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Scheap/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -530,6 +547,8 @@
 				DEVELOPMENT_TEAM = 37925SQG82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Scheap/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

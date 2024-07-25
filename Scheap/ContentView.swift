@@ -16,32 +16,35 @@ struct ContentView: View {
             HomepageView()
                 .opacity(activePage == .home ? 1 : 0)
                 .disabled(activePage == .home ? false : true)
-            ShoppingListView()
+            ShoppingListView(isShowingKeyboard: $keyboardActive)
                 .opacity(activePage == .shoppingList ? 1 : 0)
                 .disabled(activePage == .shoppingList ? false : true)
             StoreMapView()
                 .opacity(activePage == .map ? 1 : 0)
                 .disabled(activePage == .map ? false : true)
+            
+            VStack {
+                Spacer()
+                if !keyboardActive {
+                    TabView(activePage: $activePage)
+                }
+            }
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                    self.keyboardActive = true
+                }
+                
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                    self.keyboardActive = false
+                }
+            }
+            .onDisappear {
+                NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+                NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+            }
         }
         
-        VStack {
-            if !keyboardActive {
-                TabView(activePage: $activePage)
-            }
-        }
-        .onAppear {
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-                self.keyboardActive = true
-            }
-            
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                self.keyboardActive = false
-            }
-        }
-        .onDisappear {
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        }
+        
     }
 }
 

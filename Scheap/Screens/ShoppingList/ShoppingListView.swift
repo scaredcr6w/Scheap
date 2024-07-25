@@ -9,11 +9,10 @@ import SwiftUI
 
 struct ShoppingListView: View {
     @StateObject private var viewModel = ShoppingListViewModel()
-    @State private var isShowingKeyboard: Bool = false
+    @Binding var isShowingKeyboard: Bool
     @State private var isShowingInfoSheet: Bool = false
     @FocusState private var focusTextEditor: Bool
     
-    @State var userInputString: String = ""
     @State private var didError: Bool = false
     @State private var errorMessage: String = ""
     
@@ -67,6 +66,7 @@ struct ShoppingListView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
+                .padding(.bottom, 70)
                 .alert("Hiba!",
                        isPresented: $didError,
                        actions: {
@@ -81,22 +81,9 @@ struct ShoppingListView: View {
         .sheet(isPresented: $isShowingInfoSheet) {
             ShoppingListInfoSheet()
         }
-        .onAppear {
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-                self.isShowingKeyboard = true
-            }
-            
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                self.isShowingKeyboard = false
-            }
-        }
-        .onDisappear {
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        }
     }
 }
 
 #Preview {
-    ShoppingListView()
+    ShoppingListView(isShowingKeyboard: .constant(false))
 }
