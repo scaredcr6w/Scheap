@@ -10,6 +10,7 @@
 		0F03E6372C493E00009E4D6F /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F03E6362C493E00009E4D6F /* HomepageView.swift */; };
 		0F03E63B2C493E70009E4D6F /* StoreMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F03E63A2C493E70009E4D6F /* StoreMapView.swift */; };
 		0FABC6852C4A9DDD00888A1E /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FABC6842C4A9DDD00888A1E /* ShoppingListView.swift */; };
+		0FBACE552C53CB67007040BF /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBACE542C53CB67007040BF /* JSONParser.swift */; };
 		0FBFE2E32C4E56CF000062BB /* ShoppingListInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBFE2E22C4E56CF000062BB /* ShoppingListInfoSheet.swift */; };
 		0FBFE2E52C4E65B4000062BB /* ShoppingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBFE2E42C4E65B4000062BB /* ShoppingListViewModel.swift */; };
 		0FC93EE82C48F25C005438F6 /* ScheapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EE72C48F25C005438F6 /* ScheapApp.swift */; };
@@ -45,6 +46,7 @@
 		0F03E6362C493E00009E4D6F /* HomepageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
 		0F03E63A2C493E70009E4D6F /* StoreMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapView.swift; sourceTree = "<group>"; };
 		0FABC6842C4A9DDD00888A1E /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
+		0FBACE542C53CB67007040BF /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		0FBFE2E22C4E56CF000062BB /* ShoppingListInfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListInfoSheet.swift; sourceTree = "<group>"; };
 		0FBFE2E42C4E65B4000062BB /* ShoppingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewModel.swift; sourceTree = "<group>"; };
 		0FC93EE42C48F25C005438F6 /* Scheap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scheap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,14 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		0FBACE532C53CB53007040BF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				0FBACE542C53CB67007040BF /* JSONParser.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		0FC93EDB2C48F25C005438F6 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +148,7 @@
 		0FC93EE62C48F25C005438F6 /* Scheap */ = {
 			isa = PBXGroup;
 			children = (
+				0FBACE532C53CB53007040BF /* Utilities */,
 				0F03E6342C493867009E4D6F /* Schemas */,
 				0F03E6352C493DF1009E4D6F /* Screens */,
 				0F03E6332C49383D009E4D6F /* OtherViews */,
@@ -343,6 +354,7 @@
 				0FABC6852C4A9DDD00888A1E /* ShoppingListView.swift in Sources */,
 				0FC93EEA2C48F25C005438F6 /* ContentView.swift in Sources */,
 				0FC93EEC2C48F25C005438F6 /* Product.swift in Sources */,
+				0FBACE552C53CB67007040BF /* JSONParser.swift in Sources */,
 				0FCCF1FC2C525D44000D391E /* StoreMapViewModel.swift in Sources */,
 				0F03E6372C493E00009E4D6F /* HomepageView.swift in Sources */,
 				0FBFE2E52C4E65B4000062BB /* ShoppingListViewModel.swift in Sources */,

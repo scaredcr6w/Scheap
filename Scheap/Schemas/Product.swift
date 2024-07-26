@@ -27,18 +27,10 @@ enum ProductCategory : Codable {
 }
 
 @Model
-final class Product {
-    var manufacturer: String?
-    var name: String
-    var category: ProductCategory?
-    var price: Int?
-    var image: Data?
+final class ShoppingList {
+    var shoppingList: [Product]
     
-    init(manufacturer: String? = nil, name: String, category: ProductCategory? = nil, price: Int? = nil, image: Data? = nil) {
-        self.manufacturer = manufacturer
-        self.name = name
-        self.category = category
-        self.price = price
-        self.image = image
+    init(shoppingList: [Product]) {
+        self.shoppingList = shoppingList
     }
 }
