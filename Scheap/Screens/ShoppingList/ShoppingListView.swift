@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ShoppingListView: View {
     @StateObject private var viewModel = ShoppingListViewModel()
+    @ObservedObject private var jsonParser = JSONParser()
     @Binding var isShowingKeyboard: Bool
     @State private var isShowingInfoSheet: Bool = false
     @FocusState private var focusTextEditor: Bool
