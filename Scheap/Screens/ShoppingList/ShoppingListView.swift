@@ -59,6 +59,10 @@ struct ShoppingListView: View {
                             self.didError = true
                         }
                     }
+                    
+                    Task {
+                        try await viewModel.searchForCheapest()
+                    }
                 } label: {
                     Image(systemName: "arrow.right.circle")
                         .resizable()

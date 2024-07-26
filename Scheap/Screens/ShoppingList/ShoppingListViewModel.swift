@@ -23,7 +23,9 @@ enum ShoppingListValidationError : Error, LocalizedError {
 
 final class ShoppingListViewModel : ObservableObject {
     @Published var userListInput: String = ""
+    private var jsonParser = JSONParser()
     var shoppingItems: [String] = []
+    var storeInventory: [Product] = []
     
     
     private func validateUserInput(
@@ -58,7 +60,25 @@ final class ShoppingListViewModel : ObservableObject {
         }
     }
     
-    private func stringToArray(input: String) -> [String] {
-        return input.split(separator: "\n").map(String.init)
+        private func stringToArray(input: String) -> [String] {
+            return input.split(separator: "\n").map { $0.lowercased() }
+        }
+    
+    func searchForCheapest() async throws -> ShoppingList {
+        var cheapestOption: [Product] = []
+        
+        do {
+            shoppingItems = stringToArray(input: userListInput)
+            storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/products")
+        } catch {
+            fatalError("Hiba történt a lista generálása közben! \(error)")
+        }
+        
+        for storeItem in storeInventory where shoppingItems.contains(storeItem.name.lowercased()) {
+            cheapestOption.append(storeItem)
+        }
+        
+        print(cheapestOption)
+        return ShoppingList(shoppingList: cheapestOption)
     }
 }

@@ -19,8 +19,8 @@ struct Product : Codable, Identifiable{
 }
 
 final class JSONParser : ObservableObject {
-    func loadData() async throws -> [Product] {
-        guard let url = URL(string: "http://localhost:3000/products") else {
+    func loadData(from url: String) async throws -> [Product] {
+        guard let url = URL(string: url) else {
             fatalError("Invalid URL!")
         }
         
