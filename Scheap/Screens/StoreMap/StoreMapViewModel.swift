@@ -8,27 +8,8 @@
 import Foundation
 import CoreLocation
 
-enum LocationAuthorizationStatus {
-    case restricted
-    case denied
-    case unknown
-    
-    var errorDescription: String? {
-        switch self {
-        case .restricted:
-            return "Korlátozott hozzáférés a helymeghatározáshoz."
-        case .denied:
-            return "Hozzáférés megtagadva."
-        case .unknown:
-            return "Ismeretlen hiba lépett fel."
-        }
-    }
-}
-
-
 final class StoreMapViewModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     var userLocation: CLLocationCoordinate2D?
-    @Published var locationAuthorizationStatus: LocationAuthorizationStatus?
     var manager = CLLocationManager()
     
     func checkAuthorization() {
@@ -39,15 +20,15 @@ final class StoreMapViewModel : NSObject, CLLocationManagerDelegate, ObservableO
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
         case .restricted:
-            locationAuthorizationStatus = LocationAuthorizationStatus.restricted
+            break
         case .denied:
-            locationAuthorizationStatus = LocationAuthorizationStatus.denied
+            break
         case .authorizedAlways:
             userLocation = manager.location?.coordinate
         case .authorizedWhenInUse:
             userLocation = manager.location?.coordinate
         @unknown default:
-            locationAuthorizationStatus = LocationAuthorizationStatus.unknown
+            break
         }
     }
     
