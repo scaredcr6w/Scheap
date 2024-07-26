@@ -11,8 +11,16 @@ import SwiftData
 enum ProductCategory : Codable {
     case dairy
     case meat
-    case fruit
-    case vegetable
+    case fruitvegetable
+    case pastries
+    case frozen
+    case housekeping
+    case petfood
+    case baseProducts
+    case baby
+    case beauty
+    case snack
+    case vegan
     case beverage
     case alcoholicBeverage
     case other
