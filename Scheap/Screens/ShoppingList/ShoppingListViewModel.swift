@@ -49,7 +49,9 @@ final class ShoppingListViewModel : ObservableObject {
     }
     
     func handleUserInput(completion: @escaping (Error?) -> Void) {
-        validateUserInput(from: userListInput) { result in
+        validateUserInput(from: userListInput) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let validString):
                 self.shoppingItems = self.stringToArray(input: validString)
