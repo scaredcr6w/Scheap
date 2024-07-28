@@ -61,7 +61,7 @@ struct ShoppingListView: View {
                     }
                     
                     Task {
-                        try await viewModel.searchForCheapest()
+                        try await viewModel.createCheapestList()
                     }
                 } label: {
                     Image(systemName: "arrow.right.circle")

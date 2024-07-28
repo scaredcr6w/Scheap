@@ -44,7 +44,7 @@ final class ShoppingListViewModel : ObservableObject {
             completionHandler(.failure(.specialCharacters))
             return
         }
-
+        
         completionHandler(.success(userInput))
     }
     
@@ -54,7 +54,7 @@ final class ShoppingListViewModel : ObservableObject {
             
             switch result {
             case .success(let validString):
-                self.shoppingItems = self.stringToArray(input: validString)
+                self.shoppingItems = self.stringToArray(input: validString, sep: "\n")
                 completion(nil)
             case .failure(let error):
                 completion(error)
@@ -62,25 +62,49 @@ final class ShoppingListViewModel : ObservableObject {
         }
     }
     
-        private func stringToArray(input: String) -> [String] {
-            return input.split(separator: "\n").map { $0.lowercased() }
-        }
+    private func stringToArray(input: String, sep: String) -> [String] {
+        return input.split(separator: sep).map { $0.lowercased() }
+    }
     
-    func searchForCheapest() async throws -> ShoppingList {
+    func createCheapestList() async throws -> ShoppingList {
         var cheapestOption: [Product] = []
         
         do {
-            shoppingItems = stringToArray(input: userListInput)
+            shoppingItems = stringToArray(input: userListInput, sep: "\n")
             storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/products")
         } catch {
             fatalError("Hiba történt a lista generálása közben! \(error)")
         }
         
-        for storeItem in storeInventory where shoppingItems.contains(storeItem.name.lowercased()) {
-            cheapestOption.append(storeItem)
+        for item in shoppingItems {
+            if let cheapestProduct = searchItemVariations(for: item).min(by: { $0.price < $1.price }) {
+                cheapestOption.append(cheapestProduct)
+            }
         }
         
         print(cheapestOption)
         return ShoppingList(shoppingList: cheapestOption)
+    }
+    
+    private func searchItemVariations(for item: String) -> [Product] {
+        let currentItem: [String] = stringToArray(input: item.lowercased(), sep: " ")
+        var matchingProducts: [Product] = []
+        
+        // végigmegy az összes terméken, majd ellenőrzi, hogy a jelenlegi input tömbben benne van e a termék neve tömbben
+        for product in storeInventory {
+            let productNameArray: [String] = stringToArray(input: product.name.lowercased(), sep: " ")
+            let containsItem: Bool = productNameArray.contains(currentItem)
+            
+            if containsItem {
+                let idk = stringToArray(input: product.name.lowercased(), sep: " ")
+                let match: Bool = currentItem.allSatisfy { idk.contains($0) }
+                
+                if match {
+                    matchingProducts.append(product)
+                }
+            }
+        }
+        
+        return matchingProducts
     }
 }
