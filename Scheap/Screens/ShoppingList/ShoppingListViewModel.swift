@@ -86,6 +86,7 @@ final class ShoppingListViewModel : ObservableObject {
         return ShoppingList(shoppingList: cheapestOption)
     }
     
+    #warning("A product.name-ből eltávolítani a speciális karaktereket")
     private func searchItemVariations(for item: String) -> [Product] {
         let currentItem: [String] = stringToArray(input: item.lowercased(), sep: " ")
         var matchingProducts: [Product] = []
@@ -93,11 +94,12 @@ final class ShoppingListViewModel : ObservableObject {
         // végigmegy az összes terméken, majd ellenőrzi, hogy a jelenlegi input tömbben benne van e a termék neve tömbben
         for product in storeInventory {
             let productNameArray: [String] = stringToArray(input: product.name.lowercased(), sep: " ")
-            let containsItem: Bool = productNameArray.contains(currentItem)
+            let containsItem: Bool = productNameArray.contains { item in
+                currentItem.contains(item)
+            }
             
             if containsItem {
-                let idk = stringToArray(input: product.name.lowercased(), sep: " ")
-                let match: Bool = currentItem.allSatisfy { idk.contains($0) }
+                let match: Bool = currentItem.allSatisfy { productNameArray.contains($0) }
                 
                 if match {
                     matchingProducts.append(product)
