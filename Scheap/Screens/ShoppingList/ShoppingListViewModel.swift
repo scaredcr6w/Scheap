@@ -67,7 +67,7 @@ final class ShoppingListViewModel : ObservableObject {
         return input.split(separator: sep).map { $0.lowercased() }
     }
     
-    func createCheapestList() async throws -> ShoppingList {
+    func createCheapestList(from store: String) async throws -> ShoppingList {
         var cheapestOption: [Product] = []
         
         do {
@@ -84,7 +84,7 @@ final class ShoppingListViewModel : ObservableObject {
         }
         
         print(cheapestOption)
-        return ShoppingList(shoppingList: cheapestOption)
+        return ShoppingList(store: store, shoppingList: cheapestOption)
     }
     
     private func searchItemVariations(for item: String) -> [Product] {

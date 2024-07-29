@@ -64,10 +64,14 @@ struct ShoppingListView: View {
                             Task {
                                 do {
                                     viewModel.cheapestLists.append(
-                                        try await viewModel.createCheapestList()
+                                        try await viewModel.createCheapestList(from: "ALDI")
                                     )
                                     viewModel.cheapestLists.append(
-                                        try await viewModel.createCheapestList()
+                                        try await viewModel.createCheapestList(from: "Spar")
+                                    )
+                                    
+                                    viewModel.cheapestLists.append(
+                                        try await viewModel.createCheapestList(from: "Tesco")
                                     )
                                     
                                     withAnimation(.easeInOut) {
