@@ -54,7 +54,7 @@ final class ShoppingListViewModel : ObservableObject {
             
             switch result {
             case .success(let validString):
-                self.shoppingItems = self.stringToArray(input: validString, sep: "\n")
+                self.shoppingItems = self.stringToArrayLowercased(input: validString, sep: "\n")
                 completion(nil)
             case .failure(let error):
                 completion(error)
@@ -62,7 +62,7 @@ final class ShoppingListViewModel : ObservableObject {
         }
     }
     
-    private func stringToArray(input: String, sep: String) -> [String] {
+    private func stringToArrayLowercased(input: String, sep: String) -> [String] {
         return input.split(separator: sep).map { $0.lowercased() }
     }
     
@@ -70,7 +70,7 @@ final class ShoppingListViewModel : ObservableObject {
         var cheapestOption: [Product] = []
         
         do {
-            shoppingItems = stringToArray(input: userListInput, sep: "\n")
+            shoppingItems = stringToArrayLowercased(input: userListInput, sep: "\n")
             storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/products")
         } catch {
             fatalError("Hiba történt a lista generálása közben! \(error)")
@@ -86,14 +86,13 @@ final class ShoppingListViewModel : ObservableObject {
         return ShoppingList(shoppingList: cheapestOption)
     }
     
-    #warning("A product.name-ből eltávolítani a speciális karaktereket")
     private func searchItemVariations(for item: String) -> [Product] {
-        let currentItem: [String] = stringToArray(input: item.lowercased(), sep: " ")
+        let currentItem: [String] = stringToArrayLowercased(input: item.withoutSpecialChars, sep: " ")
         var matchingProducts: [Product] = []
         
         // végigmegy az összes terméken, majd ellenőrzi, hogy a jelenlegi input tömbben benne van e a termék neve tömbben
         for product in storeInventory {
-            let productNameArray: [String] = stringToArray(input: product.name.lowercased(), sep: " ")
+            let productNameArray: [String] = stringToArrayLowercased(input: product.name.withoutSpecialChars, sep: " ")
             let containsItem: Bool = productNameArray.contains { item in
                 currentItem.contains(item)
             }
