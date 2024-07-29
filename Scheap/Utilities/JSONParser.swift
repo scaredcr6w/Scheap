@@ -6,6 +6,21 @@
 //
 
 import Foundation
+
+enum ParsingErrors: Error, LocalizedError {
+    case invalidUrl
+    case decodingError
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidUrl:
+            return "Helytelen URL!"
+        case .decodingError:
+            return "Valami hiba történt a dekódolás során!"
+        }
+    }
+}
+
 struct Product : Codable, Identifiable{
     let brand: String
     let name: String
@@ -21,7 +36,7 @@ struct Product : Codable, Identifiable{
 final class JSONParser : ObservableObject {
     func loadData(from url: String) async throws -> [Product] {
         guard let url = URL(string: url) else {
-            fatalError("Invalid URL!")
+            throw ParsingErrors.invalidUrl
         }
         
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -30,7 +45,7 @@ final class JSONParser : ObservableObject {
             let products = try JSONDecoder().decode([Product].self, from: data)
             return products
         } catch {
-            fatalError("Failed to decode productlist.json from bundle: \(error)")
+            throw ParsingErrors.decodingError
         }
     }
 }

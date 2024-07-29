@@ -23,6 +23,7 @@ enum ShoppingListValidationError : Error, LocalizedError {
 
 final class ShoppingListViewModel : ObservableObject {
     @Published var userListInput: String = ""
+    @Published var cheapestList = ShoppingList(shoppingList: [])
     private var jsonParser = JSONParser()
     var shoppingItems: [String] = []
     var storeInventory: [Product] = []
@@ -73,7 +74,7 @@ final class ShoppingListViewModel : ObservableObject {
             shoppingItems = stringToArrayLowercased(input: userListInput, sep: "\n")
             storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/products")
         } catch {
-            fatalError("Hiba történt a lista generálása közben! \(error)")
+            throw ParsingErrors.decodingError
         }
         
         for item in shoppingItems {
