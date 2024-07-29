@@ -63,8 +63,12 @@ struct ShoppingListView: View {
                             
                             Task {
                                 do {
-                                    viewModel.cheapestList =
-                                    try await viewModel.createCheapestList()
+                                    viewModel.cheapestLists.append(
+                                        try await viewModel.createCheapestList()
+                                    )
+                                    viewModel.cheapestLists.append(
+                                        try await viewModel.createCheapestList()
+                                    )
                                     
                                     withAnimation(.easeInOut) {
                                         isShowingComparisonPage.toggle()
@@ -100,7 +104,7 @@ struct ShoppingListView: View {
             }
             
             if isShowingComparisonPage {
-                ComparisonPageView()
+                ComparisonPageView(shoppingLists: viewModel.cheapestLists)
             }
         }
         

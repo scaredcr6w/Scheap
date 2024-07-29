@@ -9,17 +9,25 @@ import SwiftUI
 import SwiftData
 
 struct ComparisonPageView: View {
+    var shoppingLists: [ShoppingList]
+    
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Compare")
-                .frame(maxWidth: .infinity)
-            Spacer()
+        List {
+            ForEach(shoppingLists) { shoppingList in
+                DisclosureGroup(shoppingList.store ?? "Ismeretlen bolt") {
+                    ForEach(shoppingList.shoppingList) { product in
+                        HStack {
+                            Text(product.name)
+                            Spacer()
+                            Text("\(product.price)")
+                        }
+                    }
+                }
+            }
         }
-        .background(Color.red)
     }
 }
 
 #Preview {
-    ComparisonPageView()
+    ComparisonPageView(shoppingLists: [ShoppingList(store: "ALDI", shoppingList: [Product(brand: "Marka", name: "Cucc", category: "beverage", price: 200, image: nil)])])
 }

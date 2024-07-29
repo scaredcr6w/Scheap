@@ -8,29 +8,13 @@
 import Foundation
 import SwiftData
 
-enum ProductCategory : Codable {
-    case dairy
-    case meat
-    case fruitvegetable
-    case pastries
-    case frozen
-    case housekeping
-    case petfood
-    case baseProducts
-    case baby
-    case beauty
-    case snack
-    case vegan
-    case beverage
-    case alcoholicBeverage
-    case other
-}
-
 @Model
 final class ShoppingList {
+    var store: String?
     var shoppingList: [Product]
     
-    init(shoppingList: [Product]) {
+    init(store: String? = nil, shoppingList: [Product]) {
+        self.store = store
         self.shoppingList = shoppingList
     }
 }

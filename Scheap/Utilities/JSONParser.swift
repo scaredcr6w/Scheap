@@ -21,7 +21,7 @@ enum ParsingErrors: Error, LocalizedError {
     }
 }
 
-struct Product : Codable, Identifiable{
+struct Product : Codable, Identifiable, Hashable{
     let brand: String
     let name: String
     let category: String

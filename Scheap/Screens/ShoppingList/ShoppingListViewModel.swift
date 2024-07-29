@@ -23,7 +23,7 @@ enum ShoppingListValidationError : Error, LocalizedError {
 
 final class ShoppingListViewModel : ObservableObject {
     @Published var userListInput: String = ""
-    @Published var cheapestList = ShoppingList(shoppingList: [])
+    @Published var cheapestLists: [ShoppingList] = []
     private var jsonParser = JSONParser()
     var shoppingItems: [String] = []
     var storeInventory: [Product] = []
