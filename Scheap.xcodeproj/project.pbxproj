@@ -18,7 +18,7 @@
 		0FBFE2E52C4E65B4000062BB /* ShoppingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBFE2E42C4E65B4000062BB /* ShoppingListViewModel.swift */; };
 		0FC93EE82C48F25C005438F6 /* ScheapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EE72C48F25C005438F6 /* ScheapApp.swift */; };
 		0FC93EEA2C48F25C005438F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EE92C48F25C005438F6 /* ContentView.swift */; };
-		0FC93EEC2C48F25C005438F6 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EEB2C48F25C005438F6 /* Product.swift */; };
+		0FC93EEC2C48F25C005438F6 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EEB2C48F25C005438F6 /* ShoppingList.swift */; };
 		0FC93EEE2C48F25D005438F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC93EED2C48F25D005438F6 /* Assets.xcassets */; };
 		0FC93EF12C48F25D005438F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FC93EF02C48F25D005438F6 /* Preview Assets.xcassets */; };
 		0FC93EFB2C48F25D005438F6 /* ScheapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC93EFA2C48F25D005438F6 /* ScheapTests.swift */; };
@@ -58,7 +58,7 @@
 		0FC93EE42C48F25C005438F6 /* Scheap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scheap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FC93EE72C48F25C005438F6 /* ScheapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheapApp.swift; sourceTree = "<group>"; };
 		0FC93EE92C48F25C005438F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		0FC93EEB2C48F25C005438F6 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		0FC93EEB2C48F25C005438F6 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
 		0FC93EED2C48F25D005438F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FC93EF02C48F25D005438F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0FC93EF62C48F25D005438F6 /* ScheapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +108,7 @@
 		0F03E6342C493867009E4D6F /* Schemas */ = {
 			isa = PBXGroup;
 			children = (
-				0FC93EEB2C48F25C005438F6 /* Product.swift */,
+				0FC93EEB2C48F25C005438F6 /* ShoppingList.swift */,
 			);
 			path = Schemas;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 				0F63F1942C576CFE003F45B1 /* StringExtensions.swift in Sources */,
 				0FABC6852C4A9DDD00888A1E /* ShoppingListView.swift in Sources */,
 				0FC93EEA2C48F25C005438F6 /* ContentView.swift in Sources */,
-				0FC93EEC2C48F25C005438F6 /* Product.swift in Sources */,
+				0FC93EEC2C48F25C005438F6 /* ShoppingList.swift in Sources */,
 				0F6DB37F2C57D5010071B3C2 /* TabPage.swift in Sources */,
 				0FBACE552C53CB67007040BF /* JSONParser.swift in Sources */,
 				0F6DB37D2C5792AD0071B3C2 /* ComparisonPageView.swift in Sources */,

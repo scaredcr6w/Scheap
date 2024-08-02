@@ -13,9 +13,11 @@ struct ComparisonPageView: View {
     
     var body: some View {
         Text("Tabs on the top")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.red)
     }
 }
 
 #Preview {
-    ComparisonPageView(shoppingLists: [ShoppingList(store: "ALDI", shoppingList: [Product(brand: "Marka", name: "Cucc", category: "beverage", price: 200, image: nil)])])
+    ComparisonPageView(shoppingLists: [ShoppingList(store: "ALDI", shoppingList: [Product(name: "Cucc", category: "beverage", price: 200, image: nil)])])
 }

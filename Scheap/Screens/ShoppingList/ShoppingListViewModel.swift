@@ -72,7 +72,7 @@ final class ShoppingListViewModel : ObservableObject {
         
         do {
             shoppingItems = stringToArrayLowercased(input: userListInput, sep: "\n")
-            storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/products")
+            storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/\(store)")
         } catch {
             throw ParsingErrors.decodingError
         }

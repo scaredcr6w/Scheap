@@ -21,18 +21,6 @@ enum ParsingErrors: Error, LocalizedError {
     }
 }
 
-struct Product : Codable, Identifiable, Hashable{
-    let brand: String
-    let name: String
-    let category: String
-    let price: Int
-    let image: Data?
-    
-    var id: UUID {
-        return UUID()
-    }
-}
-
 final class JSONParser : ObservableObject {
     func loadData(from url: String) async throws -> [Product] {
         guard let url = URL(string: url) else {

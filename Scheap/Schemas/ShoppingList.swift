@@ -18,3 +18,14 @@ final class ShoppingList {
         self.shoppingList = shoppingList
     }
 }
+
+struct Product : Codable, Identifiable, Hashable{
+    let name: String
+    let category: String
+    let price: Int
+    let image: Data?
+    
+    var id: UUID {
+        return UUID()
+    }
+}
