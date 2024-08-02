@@ -26,6 +26,7 @@ enum Stores: String, CaseIterable, Identifiable {
 }
 
 struct ComparisonPageView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var selectedStore: Stores = .aldi
     var shoppingLists: [ShoppingList]
     
@@ -34,7 +35,7 @@ struct ComparisonPageView: View {
     }
     
     var body: some View {
-        VStack {
+        List {
             Picker("Boltok", selection: $selectedStore) {
                 ForEach(Stores.allCases) { store in
                     Text(store.storename.capitalized).tag(store)
@@ -43,14 +44,58 @@ struct ComparisonPageView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             
-            List(filteredShoppingList) { product in
-                HStack {
-                    Text(product.name)
-                    Spacer()
-                    Text("\(product.price)")
+            ForEach(filteredShoppingList) { product in
+                Section {
+                    ListCardView(productName: product.name,
+                                 price: "\(product.price) Ft",
+                                 productImage: product.image)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            //
+                        } label: {
+                            Label("Törlés", systemImage: "trash")
+                        }
+                    }
                 }
             }
         }
+        .scrollContentBackground(colorScheme == .dark ? .hidden : .visible)
+    }
+}
+
+struct ListCardView: View {
+    let productName: String
+    let price: String
+    let productImage: Data?
+    
+    var body: some View {
+        HStack {
+            if let productImage,
+               let uiImage = UIImage(data: productImage) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 100, maxHeight: 100)
+            } else {
+                Image(systemName: "questionmark.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 100, maxHeight: 100)
+                    .foregroundStyle(Color.gray)
+            }
+            
+            VStack (alignment: .leading) {
+                Text(productName)
+                    .bold()
+                    .font(.system(size: 18))
+                Text(price)
+                
+            }
+            .padding(.trailing)
+        }
+        .frame(width: 340, height: 120, alignment: .leading)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .contentShape(Rectangle())
     }
 }
 
