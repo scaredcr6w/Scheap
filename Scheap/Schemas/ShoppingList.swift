@@ -21,7 +21,6 @@ final class ShoppingList {
 
 struct Product : Codable, Identifiable, Hashable{
     let name: String
-    let category: String
     let price: Int
     let image: Data?
     

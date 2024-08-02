@@ -20,94 +20,94 @@ struct ShoppingListView: View {
     
     var body: some View {
         ZStack {
-            VStack (alignment: .leading) {
-                HStack {
-                    Text("Bevásárlólista")
-                        .bold()
-                        .font(.system(size: 36))
-                        .padding()
-                    
-                    Image(systemName: "info.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 28)
-                        .foregroundStyle(Color.gray)
-                        .padding(.trailing)
-                        .onTapGesture {
-                            isShowingInfoSheet.toggle()
-                        }
-                    
-                    if isShowingKeyboard {
-                        Button("Kész") {
-                            focusTextEditor = false
-                        }
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                    }
-                }
-                
-                TextEditor(text: $viewModel.userListInput)
-                    .focused($focusTextEditor)
-                    .font(.system(size: 28))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding()
-                
-                
-                if !isShowingKeyboard && !viewModel.userListInput.isEmpty {
-                    Button {
-                        viewModel.handleUserInput() { error in
-                            if let error {
-                                self.errorMessage = error.localizedDescription
-                                self.didError = true
-                            }
-                            
-                            Task {
-                                do {
-                                    viewModel.cheapestLists.append(
-                                        try await viewModel.createCheapestList(from: "aldi")
-                                    )
-                                    viewModel.cheapestLists.append(
-                                        try await viewModel.createCheapestList(from: "spar")
-                                    )
-                                    
-                                    viewModel.cheapestLists.append(
-                                        try await viewModel.createCheapestList(from: "tesco")
-                                    )
-                                    
-                                    withAnimation(.easeInOut) {
-                                        isShowingComparisonPage.toggle()
-                                    }
-                                } catch {
-                                    self.didError = true
-                                    self.errorMessage = error.localizedDescription
-                                }
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "arrow.right.circle")
+            if !isShowingComparisonPage {
+                VStack (alignment: .leading) {
+                    HStack {
+                        Text("Bevásárlólista")
+                            .bold()
+                            .font(.system(size: 36))
+                            .padding()
+                        
+                        Image(systemName: "info.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 56)
+                            .frame(width: 28)
+                            .foregroundStyle(Color.gray)
+                            .padding(.trailing)
+                            .onTapGesture {
+                                isShowingInfoSheet.toggle()
+                            }
+                        
+                        if isShowingKeyboard {
+                            Button("Kész") {
+                                focusTextEditor = false
+                            }
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding()
-                    .padding(.bottom, 70)
-                    .alert("Hiba!",
-                           isPresented: $didError,
-                           actions: {
-                        Button("OK", role: .cancel) { }
-                    },
-                           message: {
-                        Text(errorMessage)
-                    })
+                    
+                    TextEditor(text: $viewModel.userListInput)
+                        .focused($focusTextEditor)
+                        .font(.system(size: 28))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding()
+                    
+                    
+                    if !isShowingKeyboard && !viewModel.userListInput.isEmpty {
+                        Button {
+                            viewModel.handleUserInput() { error in
+                                if let error {
+                                    self.errorMessage = error.localizedDescription
+                                    self.didError = true
+                                }
+                                
+                                Task {
+                                    do {
+                                        viewModel.cheapestLists.append(
+                                            try await viewModel.createCheapestList(from: "aldi")
+                                        )
+                                        viewModel.cheapestLists.append(
+                                            try await viewModel.createCheapestList(from: "spar")
+                                        )
+                                        
+                                        viewModel.cheapestLists.append(
+                                            try await viewModel.createCheapestList(from: "tesco")
+                                        )
+                                        
+                                        withAnimation(.easeInOut) {
+                                            isShowingComparisonPage.toggle()
+                                        }
+                                    } catch {
+                                        self.didError = true
+                                        self.errorMessage = error.localizedDescription
+                                    }
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "arrow.right.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 56)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding()
+                        .padding(.bottom, 70)
+                        .alert("Hiba!",
+                               isPresented: $didError,
+                               actions: {
+                            Button("OK", role: .cancel) { }
+                        },
+                               message: {
+                            Text(errorMessage)
+                        })
+                    }
+                    
                 }
-                
-            }
-            .sheet(isPresented: $isShowingInfoSheet) {
-                ShoppingListInfoSheet()
-            }
-            
-            if isShowingComparisonPage {
+                .sheet(isPresented: $isShowingInfoSheet) {
+                    ShoppingListInfoSheet()
+                }
+            } else {
                 ComparisonPageView(shoppingLists: viewModel.cheapestLists)
             }
         }

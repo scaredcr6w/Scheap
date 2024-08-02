@@ -33,7 +33,7 @@ final class JSONParser : ObservableObject {
             let products = try JSONDecoder().decode([Product].self, from: data)
             return products
         } catch {
-            throw ParsingErrors.decodingError
+            fatalError("Hiba: \(error)")
         }
     }
 }
