@@ -27,6 +27,8 @@ enum Stores: String, CaseIterable, Identifiable {
 
 struct ComparisonPageView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State private var isShowingInfoSheet = false
+    
     @State private var selectedStore: Stores = .aldi
     var shoppingLists: [ShoppingList]
     
@@ -35,31 +37,52 @@ struct ComparisonPageView: View {
     }
     
     var body: some View {
-        List {
-            Picker("Boltok", selection: $selectedStore) {
-                ForEach(Stores.allCases) { store in
-                    Text(store.storename.capitalized).tag(store)
-                }
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Bevásárlólisták")
+                    .bold()
+                    .font(.system(size: 36))
+                    .padding()
+                
+                Image(systemName: "info.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 28)
+                    .foregroundStyle(Color.gray)
+                    .padding(.trailing)
+                    .onTapGesture {
+                        isShowingInfoSheet.toggle()
+                    }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
             
-            ForEach(filteredShoppingList) { product in
-                Section {
-                    ListCardView(productName: product.name,
-                                 price: "\(product.price) Ft",
-                                 productImage: product.image)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            //
-                        } label: {
-                            Label("Törlés", systemImage: "trash")
+            List {
+                Picker("Boltok", selection: $selectedStore) {
+                    ForEach(Stores.allCases) { store in
+                        Text(store.storename.capitalized).tag(store)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                
+                ForEach(filteredShoppingList) { product in
+                    Section {
+                        ListCardView(productName: product.name,
+                                     price: "\(product.price) Ft",
+                                     productImage: product.image)
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                //
+                            } label: {
+                                Label("Törlés", systemImage: "trash")
+                            }
                         }
                     }
                 }
             }
+            .scrollContentBackground(colorScheme == .dark ? .hidden : .visible)
+            .sheet(isPresented: $isShowingInfoSheet) {
+                ShoppingListInfoSheet()
+            }
         }
-        .scrollContentBackground(colorScheme == .dark ? .hidden : .visible)
     }
 }
 
@@ -93,12 +116,16 @@ struct ListCardView: View {
             }
             .padding(.trailing)
         }
-        .frame(width: 340, height: 120, alignment: .leading)
+        .frame(width: 340, height: 80, alignment: .leading)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .contentShape(Rectangle())
     }
 }
 
 #Preview {
-    ComparisonPageView(shoppingLists: [ShoppingList(store: "aldi", shoppingList: [Product(name: "Cucc", price: 200, image: nil)])])
+    ComparisonPageView(shoppingLists: [
+        ShoppingList(store: "aldi",
+                     shoppingList: [Product(name: "Cucc", price: 200, image: nil)]
+                    )
+    ])
 }
