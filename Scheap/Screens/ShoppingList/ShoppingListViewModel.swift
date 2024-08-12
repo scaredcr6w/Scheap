@@ -82,8 +82,6 @@ final class ShoppingListViewModel : ObservableObject {
                 cheapestOption.append(cheapestProduct)
             }
         }
-        
-        print(cheapestOption)
         return ShoppingList(store: store, shoppingList: cheapestOption)
     }
     

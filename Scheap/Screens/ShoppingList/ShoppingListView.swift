@@ -45,7 +45,6 @@ struct ShoppingListView: View {
                         if isShowingKeyboard {
                             Button("Kész") {
                                 doneButtonAction()
-                                print(preSplitList.description)
                             }
                             .font(.title2)
                             .fontWeight(.semibold)

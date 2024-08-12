@@ -36,6 +36,10 @@ struct ComparisonPageView: View {
         shoppingLists.first { $0.store == selectedStore.storename }?.shoppingList ?? []
     }
     
+    var selectedShoppingSum: Int {
+        filteredShoppingList.reduce(0, { $0 + $1.price })
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -55,14 +59,15 @@ struct ComparisonPageView: View {
                     }
             }
             
-            List {
-                Picker("Boltok", selection: $selectedStore) {
-                    ForEach(Stores.allCases) { store in
-                        Text(store.storename.capitalized).tag(store)
-                    }
+            Picker("Boltok", selection: $selectedStore) {
+                ForEach(Stores.allCases) { store in
+                    Text(store.storename.capitalized).tag(store)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+                        
+            List {
                 ForEach(filteredShoppingList) { product in
                     Section {
                         ListCardView(productName: product.name,
@@ -82,6 +87,12 @@ struct ComparisonPageView: View {
             .sheet(isPresented: $isShowingInfoSheet) {
                 ShoppingListInfoSheet()
             }
+            
+            Text("\(selectedShoppingSum) Ft")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.horizontal)
+                .padding(.bottom, 90)
         }
     }
 }
