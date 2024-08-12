@@ -11,7 +11,6 @@ import SwiftData
 struct ShoppingListView: View {
     @StateObject private var viewModel = ShoppingListViewModel()
     @Environment(\.modelContext) private var modelContext
-    
     @Query private var preSplitList: [PreSplitList]
     
     @Binding var isShowingKeyboard: Bool
@@ -68,6 +67,7 @@ struct ShoppingListView: View {
                                 
                                 Task {
                                     do {
+                                        #warning("isLoading.toggle()")
                                         viewModel.cheapestLists.append(
                                             try await viewModel.createCheapestList(from: "aldi")
                                         )
@@ -80,6 +80,7 @@ struct ShoppingListView: View {
                                         )
                                         
                                         withAnimation(.easeInOut) {
+                                            #warning("isLoading.toggle()")
                                             isShowingComparisonPage.toggle()
                                         }
                                     } catch {

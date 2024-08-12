@@ -89,11 +89,20 @@ struct ComparisonPageView: View {
                 ShoppingListInfoSheet()
             }
             
-            Text("\(selectedShoppingSum) Ft")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-                .padding(.bottom, 90)
+            HStack {
+                Text("\(selectedShoppingSum) Ft")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.horizontal)
+                
+                Button {
+                    
+                } label: {
+                    Label("Kiválaszt", systemImage: "checkmark")
+                }
+            }
+            .padding(.bottom, 120)
+
         }
         .onAppear {
             do {

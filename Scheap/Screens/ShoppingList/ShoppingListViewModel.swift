@@ -72,7 +72,7 @@ final class ShoppingListViewModel : ObservableObject {
         
         do {
             shoppingItems = stringToArrayLowercased(input: userListInput, sep: "\n")
-            storeInventory = try await jsonParser.loadData(from: "http://localhost:3000/\(store)")
+            storeInventory = try await jsonParser.loadData(from: "https://scheap-mockdata.azurewebsites.net/\(store)")
         } catch {
             throw ParsingErrors.decodingError
         }
