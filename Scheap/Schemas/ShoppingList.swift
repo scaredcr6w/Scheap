@@ -19,6 +19,15 @@ final class ShoppingList {
     }
 }
 
+@Model
+final class PreSplitList {
+    var preSplitList: String?
+    
+    init(preSplitList: String? = nil) {
+        self.preSplitList = preSplitList
+    }
+}
+
 struct Product : Codable, Identifiable, Hashable{
     let name: String
     let price: Int

@@ -10,6 +10,10 @@ import SwiftData
 
 struct ShoppingListView: View {
     @StateObject private var viewModel = ShoppingListViewModel()
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query private var preSplitList: [PreSplitList]
+    
     @Binding var isShowingKeyboard: Bool
     @FocusState private var focusTextEditor: Bool
     @State private var isShowingInfoSheet: Bool = false
@@ -40,7 +44,8 @@ struct ShoppingListView: View {
                         
                         if isShowingKeyboard {
                             Button("Kész") {
-                                focusTextEditor = false
+                                doneButtonAction()
+                                print(preSplitList.description)
                             }
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -111,10 +116,30 @@ struct ShoppingListView: View {
                 ComparisonPageView(shoppingLists: viewModel.cheapestLists)
             }
         }
+        .onAppear {
+            viewModel.userListInput = preSplitList.first?.preSplitList ?? ""
+        }
         
+    }
+    
+    private func doneButtonAction() {
+        focusTextEditor = false
+        
+        do {
+            try modelContext.delete(model: PreSplitList.self)
+        } catch {
+            print("ModelContext törlése sikertelen")
+        }
+        
+        modelContext.insert(
+            PreSplitList(
+                preSplitList: viewModel.userListInput
+            )
+        )
     }
 }
 
 #Preview {
     ShoppingListView(isShowingKeyboard: .constant(false))
+        .modelContainer(for: PreSplitList.self, inMemory: true)
 }

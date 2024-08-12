@@ -12,7 +12,8 @@ import SwiftData
 struct ScheapApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            ShoppingList.self
+            ShoppingList.self,
+            PreSplitList.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
