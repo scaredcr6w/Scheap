@@ -27,10 +27,13 @@ enum Stores: String, CaseIterable, Identifiable {
 
 struct ComparisonPageView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var modelContext
+    @Query var shoppingLists: [ShoppingList] = []
     @State private var isShowingInfoSheet = false
     
+    
     @State private var selectedStore: Stores = .aldi
-    var shoppingLists: [ShoppingList]
+    var shoppingListsTemp: [ShoppingList]
     
     var filteredShoppingList: [Product] {
         shoppingLists.first { $0.store == selectedStore.storename }?.shoppingList ?? []
@@ -73,13 +76,11 @@ struct ComparisonPageView: View {
                         ListCardView(productName: product.name,
                                      price: "\(product.price) Ft",
                                      productImage: product.image)
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                //
-                            } label: {
-                                Label("Törlés", systemImage: "trash")
-                            }
-                        }
+                    }
+                }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        modelContext.delete(shoppingLists[index])
                     }
                 }
             }
@@ -93,6 +94,16 @@ struct ComparisonPageView: View {
                 .fontWeight(.bold)
                 .padding(.horizontal)
                 .padding(.bottom, 90)
+        }
+        .onAppear {
+            do {
+                try modelContext.delete(model: ShoppingList.self)
+            } catch {
+                print("ModelContext törlése sikertelen compView")
+            }
+            shoppingListsTemp.forEach { list in
+                modelContext.insert(list)
+            }
         }
     }
 }
@@ -134,9 +145,10 @@ struct ListCardView: View {
 }
 
 #Preview {
-    ComparisonPageView(shoppingLists: [
+    ComparisonPageView(shoppingListsTemp: [
         ShoppingList(store: "aldi",
                      shoppingList: [Product(name: "Cucc", price: 200, image: nil)]
                     )
     ])
+    .modelContainer(for: [ShoppingList.self], inMemory: true)
 }

@@ -112,7 +112,7 @@ struct ShoppingListView: View {
                     ShoppingListInfoSheet()
                 }
             } else {
-                ComparisonPageView(shoppingLists: viewModel.cheapestLists)
+                ComparisonPageView(shoppingListsTemp: viewModel.cheapestLists)
             }
         }
         .onAppear {
