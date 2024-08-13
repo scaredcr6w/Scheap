@@ -60,6 +60,14 @@ struct ComparisonPageView: View {
                     .onTapGesture {
                         isShowingInfoSheet.toggle()
                     }
+                Button {
+                    
+                } label: {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 26)
+                }
             }
             
             Picker("Boltok", selection: $selectedStore) {
@@ -94,12 +102,6 @@ struct ComparisonPageView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.horizontal)
-                
-                Button {
-                    
-                } label: {
-                    Label("Kiválaszt", systemImage: "checkmark")
-                }
             }
             .padding(.bottom, 120)
 
