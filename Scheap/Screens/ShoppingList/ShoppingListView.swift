@@ -17,6 +17,7 @@ struct ShoppingListView: View {
     @FocusState private var focusTextEditor: Bool
     @State private var isShowingInfoSheet: Bool = false
     @State private var isShowingComparisonPage: Bool = false
+    @State private var isLoading: Bool = false
     
     @State private var didError: Bool = false
     @State private var errorMessage: String = ""
@@ -67,7 +68,9 @@ struct ShoppingListView: View {
                                 
                                 Task {
                                     do {
-                                        #warning("isLoading.toggle()")
+                                        withAnimation(.easeInOut) {
+                                            isLoading.toggle()
+                                        }
                                         viewModel.cheapestLists.append(
                                             try await viewModel.createCheapestList(from: "aldi")
                                         )
@@ -80,7 +83,7 @@ struct ShoppingListView: View {
                                         )
                                         
                                         withAnimation(.easeInOut) {
-                                            #warning("isLoading.toggle()")
+                                            isLoading.toggle()
                                             isShowingComparisonPage.toggle()
                                         }
                                     } catch {
@@ -107,10 +110,14 @@ struct ShoppingListView: View {
                             Text(errorMessage)
                         })
                     }
-                    
                 }
                 .sheet(isPresented: $isShowingInfoSheet) {
                     ShoppingListInfoSheet()
+                }
+                .overlay {
+                    if isLoading {
+                        LoadingView()
+                    }
                 }
             } else {
                 ComparisonPageView(shoppingListsTemp: viewModel.cheapestLists)
