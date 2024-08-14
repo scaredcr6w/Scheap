@@ -30,9 +30,8 @@ struct ComparisonPageView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var shoppingLists: [ShoppingList] = []
     @State private var isShowingInfoSheet = false
-    
-    
     @State private var selectedStore: Stores = .aldi
+    
     var shoppingListsTemp: [ShoppingList]
     
     var filteredShoppingList: [Product] {
@@ -61,7 +60,11 @@ struct ComparisonPageView: View {
                         isShowingInfoSheet.toggle()
                     }
                 Button {
-                    
+                    do {
+                       try modelContext.delete(model: PreSplitList.self)
+                    } catch {
+                        print("Lista törlése sikertelen")
+                    }
                 } label: {
                     Image(systemName: "checkmark")
                         .resizable()
