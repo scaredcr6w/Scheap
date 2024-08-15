@@ -100,20 +100,6 @@ struct ComparisonPageView: View {
             .padding(.horizontal)
             .disabled(isFinalized)
             
-//            List {
-//                ForEach(filteredShoppingList) { product in
-//                    Section {
-//                        ListCardView(productName: product.name,
-//                                     price: "\(product.price) Ft",
-//                                     productImage: product.image)
-//                    }
-//                }
-//                .onDelete { indexSet in
-//                    for index in indexSet {
-//                        modelContext.delete(shoppingLists[index])
-//                    }
-//                }
-//            }
             List {
                 ForEach(filteredShoppingList) { product in
                     HStack {

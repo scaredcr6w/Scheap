@@ -72,16 +72,12 @@ struct ShoppingListView: View {
                                         withAnimation(.easeInOut) {
                                             isLoading.toggle()
                                         }
-                                        viewModel.cheapestLists.append(
-                                            try await viewModel.createCheapestList(from: "aldi")
-                                        )
-                                        viewModel.cheapestLists.append(
-                                            try await viewModel.createCheapestList(from: "spar")
-                                        )
                                         
-                                        viewModel.cheapestLists.append(
-                                            try await viewModel.createCheapestList(from: "tesco")
-                                        )
+                                        for store in viewModel.storesToEvaluate {
+                                            viewModel.cheapestLists.append(
+                                                try await viewModel.createCheapestList(from: store)
+                                            )
+                                        }
                                         
                                         withAnimation(.bouncy) {
                                             isLoading.toggle()
