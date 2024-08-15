@@ -31,6 +31,9 @@ struct ComparisonPageView: View {
     @Query var shoppingLists: [ShoppingList] = []
     @State private var isShowingInfoSheet = false
     @State private var selectedStore: Stores = .aldi
+    @State private var isConfirmingDeletion: Bool = false
+    @State private var isConfirmingFinalization: Bool = false
+    @State private var isFinalized: Bool = false
     @Binding var isShowingComparisonPage: Bool
     
     var shoppingListsTemp: [ShoppingList]
@@ -61,20 +64,28 @@ struct ComparisonPageView: View {
                         isShowingInfoSheet.toggle()
                     }
                 Button {
-                    do {
-                        try modelContext.delete(model: ShoppingList.self)
-                        withAnimation(.easeInOut){
-                            isShowingComparisonPage.toggle()
-                        }
-                    } catch {
-                     print("Hiba a listák törlésében")
-                    }
+                    isConfirmingDeletion = true
                 } label: {
                     Image(systemName: "trash")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 26)
                         .foregroundStyle(Color.red)
+                }
+                .alert(Text("Biztosan törli a listákat?"), isPresented: $isConfirmingDeletion) {
+                    Button (role: .destructive) {
+                        do {
+                            try modelContext.delete(model: ShoppingList.self)
+                            withAnimation(.easeInOut) {
+                                isShowingComparisonPage.toggle()
+                                isConfirmingDeletion = false
+                            }
+                        } catch {
+                            print("Hiba lista törlése közben")
+                        }
+                    } label: {
+                        Text("Törlés")
+                    }
                 }
             }
             
@@ -85,7 +96,8 @@ struct ComparisonPageView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
-                        
+            .disabled(isFinalized)
+            
             List {
                 ForEach(filteredShoppingList) { product in
                     Section {
@@ -114,19 +126,34 @@ struct ComparisonPageView: View {
                 Spacer()
                 
                 Button {
-                    do {
-                       try modelContext.delete(model: PreSplitList.self)
-                    } catch {
-                        print("Lista törlése sikertelen")
-                    }
+                    isConfirmingFinalization = true
                 } label: {
                     Label("Kiválaszt", systemImage: "checkmark")
                         .font(.title2)
                 }
+                .alert(
+                    Text("Ezzel véglegesíti a választás és nem tudja később szerkeszteni a listát."),
+                    isPresented: $isConfirmingFinalization){
+                        Button {
+                            do {
+                                isFinalized = true
+                                try modelContext.delete(model: PreSplitList.self)
+                                isConfirmingFinalization = false
+                            } catch {
+                                print("Lista törlése sikertelen")
+                            }
+                        } label: {
+                            Text("Folytatás")
+                        }
+                        
+                        Button ("Mégsem", role: .cancel) {
+                            isConfirmingFinalization = false
+                        }
+                }
                 .padding(.horizontal)
             }
             .padding(.bottom, 120)
-
+            
         }
         .onAppear {
             do {
