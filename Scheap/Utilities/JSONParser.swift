@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ParsingErrors: Error, LocalizedError {
+enum ParsingError: Error, LocalizedError {
     case invalidUrl
     case decodingError
     
@@ -24,7 +24,7 @@ enum ParsingErrors: Error, LocalizedError {
 final class JSONParser : ObservableObject {
     func loadData(from url: String) async throws -> [Product] {
         guard let url = URL(string: url) else {
-            throw ParsingErrors.invalidUrl
+            throw ParsingError.invalidUrl
         }
         
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -33,7 +33,7 @@ final class JSONParser : ObservableObject {
             let products = try JSONDecoder().decode([Product].self, from: data)
             return products
         } catch {
-            throw ParsingErrors.decodingError
+            throw ParsingError.decodingError
         }
     }
 }

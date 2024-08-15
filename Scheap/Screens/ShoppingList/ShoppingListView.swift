@@ -64,6 +64,7 @@ struct ShoppingListView: View {
                                 if let error {
                                     self.errorMessage = error.localizedDescription
                                     self.didError = true
+                                    return
                                 }
                                 
                                 Task {

@@ -32,7 +32,37 @@ final class ShoppingListTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testHandleUserInputEmptyInputError() {
+        viewModel.userInputList = ""
+        
+        let expectation = self.expectation(description: "Invalid input produces error")
+        
+        viewModel.handleUserInput { error in
+            XCTAssertTrue(error as? ShoppingListValidationError == .emptyInput)
+            XCTAssertTrue(self.viewModel.shoppingItems.isEmpty)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testHandleUserInputSpecialCharactersError() {
+        viewModel.userInputList = " "
+         
+        let expectation = self.expectation(description: "Invalid input produces error")
+        
+        viewModel.handleUserInput { error in
+            XCTAssertTrue(error as? ShoppingListValidationError == .specialCharacters)
+            XCTAssertTrue(self.viewModel.shoppingItems.isEmpty)
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
     }
     
     func testCreateCheapListWithValidInput() async throws {

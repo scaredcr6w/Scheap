@@ -70,11 +70,12 @@ final class ShoppingListViewModel : ObservableObject {
     func createCheapestList(from store: String) async throws -> ShoppingList {
         var cheapestOption: [Product] = []
         
+        
         do {
             shoppingItems = stringToArrayLowercased(input: userInputList, sep: "\n")
             storeInventory = try await jsonParser.loadData(from: "https://scheap-mockdata.azurewebsites.net/\(store)")
         } catch {
-            throw ParsingErrors.decodingError
+            throw ParsingError.decodingError
         }
         
         for item in shoppingItems {
