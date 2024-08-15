@@ -31,6 +31,7 @@ struct ComparisonPageView: View {
     @Query var shoppingLists: [ShoppingList] = []
     @State private var isShowingInfoSheet = false
     @State private var selectedStore: Stores = .aldi
+    @Binding var isShowingComparisonPage: Bool
     
     var shoppingListsTemp: [ShoppingList]
     
@@ -61,15 +62,19 @@ struct ComparisonPageView: View {
                     }
                 Button {
                     do {
-                       try modelContext.delete(model: PreSplitList.self)
+                        try modelContext.delete(model: ShoppingList.self)
+                        withAnimation(.easeInOut){
+                            isShowingComparisonPage.toggle()
+                        }
                     } catch {
-                        print("Lista törlése sikertelen")
+                     print("Hiba a listák törlésében")
                     }
                 } label: {
-                    Image(systemName: "checkmark")
+                    Image(systemName: "trash")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 26)
+                        .foregroundStyle(Color.red)
                 }
             }
             
@@ -105,6 +110,20 @@ struct ComparisonPageView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.horizontal)
+                
+                Spacer()
+                
+                Button {
+                    do {
+                       try modelContext.delete(model: PreSplitList.self)
+                    } catch {
+                        print("Lista törlése sikertelen")
+                    }
+                } label: {
+                    Label("Kiválaszt", systemImage: "checkmark")
+                        .font(.title2)
+                }
+                .padding(.horizontal)
             }
             .padding(.bottom, 120)
 
@@ -159,7 +178,7 @@ struct ListCardView: View {
 }
 
 #Preview {
-    ComparisonPageView(shoppingListsTemp: [
+    ComparisonPageView(isShowingComparisonPage: .constant(true), shoppingListsTemp: [
         ShoppingList(store: "aldi",
                      shoppingList: [Product(name: "Cucc", price: 200, image: nil)]
                     )
