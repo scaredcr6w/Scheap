@@ -83,7 +83,7 @@ struct ShoppingListView: View {
                                             try await viewModel.createCheapestList(from: "tesco")
                                         )
                                         
-                                        withAnimation(.easeInOut) {
+                                        withAnimation(.bouncy) {
                                             isLoading.toggle()
                                             isShowingComparisonPage.toggle()
                                         }
@@ -117,11 +117,14 @@ struct ShoppingListView: View {
                 }
                 .overlay {
                     if isLoading {
-                        LoadingView()
+                        LoadingView("Listák összeállítása")
                     }
                 }
             } else {
-                ComparisonPageView(shoppingListsTemp: viewModel.cheapestLists)
+                ComparisonPageView(
+                    isShowingComparisonPage: $isShowingComparisonPage,
+                    shoppingListsTemp: viewModel.cheapestLists
+                )
             }
         }
         .onAppear {

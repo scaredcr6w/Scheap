@@ -31,12 +31,18 @@ struct ComparisonPageView: View {
     @Query var shoppingLists: [ShoppingList] = []
     @State private var isShowingInfoSheet = false
     @State private var selectedStore: Stores = .aldi
+    @State private var isConfirmingDeletion: Bool = false
+    @State private var isConfirmingFinalization: Bool = false
+    @State private var isFinalized: Bool = false
+    @State private var multiSelection = Set<UUID>()
+    @Binding var isShowingComparisonPage: Bool
     
     var shoppingListsTemp: [ShoppingList]
     
     var filteredShoppingList: [Product] {
         shoppingLists.first { $0.store == selectedStore.storename }?.shoppingList ?? []
     }
+    
     
     var selectedShoppingSum: Int {
         filteredShoppingList.reduce(0, { $0 + $1.price })
@@ -60,16 +66,28 @@ struct ComparisonPageView: View {
                         isShowingInfoSheet.toggle()
                     }
                 Button {
-                    do {
-                       try modelContext.delete(model: PreSplitList.self)
-                    } catch {
-                        print("Lista törlése sikertelen")
-                    }
+                    isConfirmingDeletion = true
                 } label: {
-                    Image(systemName: "checkmark")
+                    Image(systemName: "trash")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 26)
+                        .foregroundStyle(Color.red)
+                }
+                .alert(Text("Biztosan törli a listákat?"), isPresented: $isConfirmingDeletion) {
+                    Button (role: .destructive) {
+                        do {
+                            try modelContext.delete(model: ShoppingList.self)
+                            withAnimation(.easeInOut) {
+                                isShowingComparisonPage.toggle()
+                                isConfirmingDeletion = false
+                            }
+                        } catch {
+                            print("Hiba lista törlése közben")
+                        }
+                    } label: {
+                        Text("Törlés")
+                    }
                 }
             }
             
@@ -80,14 +98,30 @@ struct ComparisonPageView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
-                        
+            .disabled(isFinalized)
+            
+//            List {
+//                ForEach(filteredShoppingList) { product in
+//                    Section {
+//                        ListCardView(productName: product.name,
+//                                     price: "\(product.price) Ft",
+//                                     productImage: product.image)
+//                    }
+//                }
+//                .onDelete { indexSet in
+//                    for index in indexSet {
+//                        modelContext.delete(shoppingLists[index])
+//                    }
+//                }
+//            }
             List {
                 ForEach(filteredShoppingList) { product in
-                    Section {
-                        ListCardView(productName: product.name,
-                                     price: "\(product.price) Ft",
-                                     productImage: product.image)
+                    HStack {
+                        Text(product.name)
+                        Spacer()
+                        Text("\(product.price) Ft")
                     }
+                    .frame(height: 40)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
@@ -105,9 +139,38 @@ struct ComparisonPageView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.horizontal)
+                
+                Spacer()
+                
+                Button {
+                    isConfirmingFinalization = true
+                } label: {
+                    Label("Kiválaszt", systemImage: "checkmark")
+                        .font(.title2)
+                }
+                .alert(
+                    Text("Ezzel véglegesíti a választás és nem tudja később szerkeszteni a listát."),
+                    isPresented: $isConfirmingFinalization){
+                        Button {
+                            do {
+                                isFinalized = true
+                                try modelContext.delete(model: PreSplitList.self)
+                                isConfirmingFinalization = false
+                            } catch {
+                                print("Lista törlése sikertelen")
+                            }
+                        } label: {
+                            Text("Folytatás")
+                        }
+                        
+                        Button ("Mégsem", role: .cancel) {
+                            isConfirmingFinalization = false
+                        }
+                }
+                .padding(.horizontal)
             }
             .padding(.bottom, 120)
-
+            
         }
         .onAppear {
             do {
@@ -159,7 +222,7 @@ struct ListCardView: View {
 }
 
 #Preview {
-    ComparisonPageView(shoppingListsTemp: [
+    ComparisonPageView(isShowingComparisonPage: .constant(true), shoppingListsTemp: [
         ShoppingList(store: "aldi",
                      shoppingList: [Product(name: "Cucc", price: 200, image: nil)]
                     )
