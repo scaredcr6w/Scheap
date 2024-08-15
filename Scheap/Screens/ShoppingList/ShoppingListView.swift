@@ -51,14 +51,14 @@ struct ShoppingListView: View {
                         }
                     }
                     
-                    TextEditor(text: $viewModel.userListInput)
+                    TextEditor(text: $viewModel.userInputList)
                         .focused($focusTextEditor)
                         .font(.system(size: 28))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding()
                     
                     
-                    if !isShowingKeyboard && !viewModel.userListInput.isEmpty {
+                    if !isShowingKeyboard && !viewModel.userInputList.isEmpty {
                         Button {
                             viewModel.handleUserInput() { error in
                                 if let error {
@@ -124,7 +124,7 @@ struct ShoppingListView: View {
             }
         }
         .onAppear {
-            viewModel.userListInput = preSplitList.first?.preSplitList ?? ""
+            viewModel.userInputList = preSplitList.first?.preSplitList ?? ""
         }
         
     }
@@ -140,7 +140,7 @@ struct ShoppingListView: View {
         
         modelContext.insert(
             PreSplitList(
-                preSplitList: viewModel.userListInput
+                preSplitList: viewModel.userInputList
             )
         )
     }

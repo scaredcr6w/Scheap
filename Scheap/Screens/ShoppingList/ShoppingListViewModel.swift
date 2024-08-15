@@ -22,7 +22,7 @@ enum ShoppingListValidationError : Error, LocalizedError {
 }
 
 final class ShoppingListViewModel : ObservableObject {
-    @Published var userListInput: String = ""
+    @Published var userInputList: String = ""
     @Published var cheapestLists: [ShoppingList] = []
     private var jsonParser = JSONParser()
     var shoppingItems: [String] = []
@@ -41,7 +41,7 @@ final class ShoppingListViewModel : ObservableObject {
             return
         }
         
-        guard userListInput.rangeOfCharacter(from: validCharacters) != nil else {
+        guard userInputList.rangeOfCharacter(from: validCharacters) != nil else {
             completionHandler(.failure(.specialCharacters))
             return
         }
@@ -50,7 +50,7 @@ final class ShoppingListViewModel : ObservableObject {
     }
     
     func handleUserInput(completion: @escaping (Error?) -> Void) {
-        validateUserInput(from: userListInput) { [weak self] result in
+        validateUserInput(from: userInputList) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -71,7 +71,7 @@ final class ShoppingListViewModel : ObservableObject {
         var cheapestOption: [Product] = []
         
         do {
-            shoppingItems = stringToArrayLowercased(input: userListInput, sep: "\n")
+            shoppingItems = stringToArrayLowercased(input: userInputList, sep: "\n")
             storeInventory = try await jsonParser.loadData(from: "https://scheap-mockdata.azurewebsites.net/\(store)")
         } catch {
             throw ParsingErrors.decodingError
