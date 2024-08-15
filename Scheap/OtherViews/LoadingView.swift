@@ -8,17 +8,28 @@
 import SwiftUI
 
 struct LoadingView: View {
+    var title: String
     var body: some View {
         VStack {
-            ProgressView("Listák összeállítása")
+            ProgressView()
+                .scaleEffect(2.0)
                 .progressViewStyle(CircularProgressViewStyle())
-                .tint(Color.blue)
+                .tint(Color.white)
+                .padding()
+            Text(title)
+                .foregroundStyle(Color.white)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.primaryBackground)
+        .frame(width: 200, height: 200)
+        .background(Color.secondaryBackground)
+        .opacity(0.7)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    init(_ title: String) {
+        self.title = title
     }
 }
 
 #Preview {
-    LoadingView()
+    LoadingView("Listák összeállítása")
 }

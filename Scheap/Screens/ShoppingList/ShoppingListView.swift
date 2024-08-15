@@ -116,7 +116,7 @@ struct ShoppingListView: View {
                 }
                 .overlay {
                     if isLoading {
-                        LoadingView()
+                        LoadingView("Listák összeállítása")
                     }
                 }
             } else {

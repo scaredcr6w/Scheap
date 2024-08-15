@@ -34,6 +34,7 @@ struct ComparisonPageView: View {
     @State private var isConfirmingDeletion: Bool = false
     @State private var isConfirmingFinalization: Bool = false
     @State private var isFinalized: Bool = false
+    @State private var multiSelection = Set<UUID>()
     @Binding var isShowingComparisonPage: Bool
     
     var shoppingListsTemp: [ShoppingList]
@@ -41,6 +42,7 @@ struct ComparisonPageView: View {
     var filteredShoppingList: [Product] {
         shoppingLists.first { $0.store == selectedStore.storename }?.shoppingList ?? []
     }
+    
     
     var selectedShoppingSum: Int {
         filteredShoppingList.reduce(0, { $0 + $1.price })
@@ -98,13 +100,28 @@ struct ComparisonPageView: View {
             .padding(.horizontal)
             .disabled(isFinalized)
             
+//            List {
+//                ForEach(filteredShoppingList) { product in
+//                    Section {
+//                        ListCardView(productName: product.name,
+//                                     price: "\(product.price) Ft",
+//                                     productImage: product.image)
+//                    }
+//                }
+//                .onDelete { indexSet in
+//                    for index in indexSet {
+//                        modelContext.delete(shoppingLists[index])
+//                    }
+//                }
+//            }
             List {
                 ForEach(filteredShoppingList) { product in
-                    Section {
-                        ListCardView(productName: product.name,
-                                     price: "\(product.price) Ft",
-                                     productImage: product.image)
+                    HStack {
+                        Text(product.name)
+                        Spacer()
+                        Text("\(product.price) Ft")
                     }
+                    .frame(height: 40)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {

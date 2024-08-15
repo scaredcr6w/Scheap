@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F03E6372C493E00009E4D6F /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F03E6362C493E00009E4D6F /* HomepageView.swift */; };
 		0F03E63B2C493E70009E4D6F /* StoreMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F03E63A2C493E70009E4D6F /* StoreMapView.swift */; };
-		0F63F1942C576CFE003F45B1 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F63F1932C576CFE003F45B1 /* StringExtensions.swift */; };
+		0F63F1942C576CFE003F45B1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F63F1932C576CFE003F45B1 /* String+.swift */; };
 		0F6DB37D2C5792AD0071B3C2 /* ComparisonPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6DB37C2C5792AD0071B3C2 /* ComparisonPageView.swift */; };
 		0F6DB37F2C57D5010071B3C2 /* TabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6DB37E2C57D5010071B3C2 /* TabPage.swift */; };
 		0F8C7FE82C6B763600273D36 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8C7FE72C6B763600273D36 /* LoadingView.swift */; };
@@ -49,7 +49,7 @@
 /* Begin PBXFileReference section */
 		0F03E6362C493E00009E4D6F /* HomepageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
 		0F03E63A2C493E70009E4D6F /* StoreMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapView.swift; sourceTree = "<group>"; };
-		0F63F1932C576CFE003F45B1 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		0F63F1932C576CFE003F45B1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		0F6DB37C2C5792AD0071B3C2 /* ComparisonPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonPageView.swift; sourceTree = "<group>"; };
 		0F6DB37E2C57D5010071B3C2 /* TabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPage.swift; sourceTree = "<group>"; };
 		0F8C7FE72C6B763600273D36 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		0F63F1922C576CE5003F45B1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				0F63F1932C576CFE003F45B1 /* StringExtensions.swift */,
+				0F63F1932C576CFE003F45B1 /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F63F1942C576CFE003F45B1 /* StringExtensions.swift in Sources */,
+				0F63F1942C576CFE003F45B1 /* String+.swift in Sources */,
 				0FABC6852C4A9DDD00888A1E /* ShoppingListView.swift in Sources */,
 				0FC93EEA2C48F25C005438F6 /* ContentView.swift in Sources */,
 				0FC93EEC2C48F25C005438F6 /* ShoppingList.swift in Sources */,
